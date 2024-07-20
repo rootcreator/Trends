@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-)$$&@2#p--dw%tei2h3_5#_)6*tp)9t4y63tbff_mh3wr0$-r$
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['yourdomain.com', 'trends-s829.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'https://trends-s829.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -61,10 +61,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'trends.wsgi.application'
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
