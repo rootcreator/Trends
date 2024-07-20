@@ -2,20 +2,13 @@ services:
   - type: web
     name: trends
     env: python
-    buildCommand: |
-      pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt
       python manage.py migrate app
     startCommand: "gunicorn trends.wsgi --bind 0.0.0.0:$PORT"
-    runtime: python3.11
     envVars:
-        - key: DATABASE_NAME
-          value: <trends>
-        - key: DATABASE_USER
-          value: <trends_zyzr_user>
-        - key: DATABASE_PASSWORD
-          value: <MjWaEWaTRU3Zc8mEACDBmGHV8uKx5T09>
-        - key: DATABASE_HOST
-          value: <dpg-cqdhp0o8fa8c73dl8jug-a>
-        - key: DATABASE_PORT
-          value: <5432>
+      - key: DJANGO_SETTINGS_MODULE
+        value: "trends.settings"
+      # Add a setup command to run migrations before starting the server
+    setupCommand: |
+        python manage.py migrate --noinput
 
