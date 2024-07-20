@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = 'django-insecure-)$$&@2#p--dw%tei2h3_5#_)6*tp)9t4y63tbff_mh3wr0$-r$'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['yourdomain.com', 'trends-s829.onrender.com']
 
