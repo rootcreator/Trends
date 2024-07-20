@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: my-django-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn trends.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: trends.settings
+      - key: SECRET_KEY
+        value: your-secret-key  # Replace with your actual secret key
+      - key: ALLOWED_HOSTS
+        value: ''  # Set this value later
+    plan: starter  # Adjust the plan as needed
