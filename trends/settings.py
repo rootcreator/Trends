@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-)$$&@2#p--dw%tei2h3_5#_)6*tp)9t4y63tbff_mh3wr0$-r$
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'https://trends-s829.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://trends-s829.onrender.com', 'trends-s829.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
