@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trends Finder</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa; /* Light gray background color */
+        }
+        .trends-list li {
+            margin-bottom: 10px;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for cards */
+            transition: box-shadow 0.3s ease; /* Smooth transition on hover */
+        }
+        .card:hover {
+            box-shadow: 0 0 20px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
+        }
+        .card-img-top {
+            height: 200px; /* Set a fixed height for consistent display */
+            object-fit: cover; /* Ensure images maintain aspect ratio */
+        }
+        .card-text {
+            overflow: hidden; /* Hide overflowing text */
+            text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Show up to 3 lines of text */
+            -webkit-box-orient: vertical;
+        }
+        .btn-primary {
+            background-color: #007bff; /* Blue primary button color */
+            border-color: #007bff; /* Blue primary button border color */
+        }
+        .btn-primary:hover {
+            background-color: #0069d9; /* Darker blue on hover */
+            border-color: #0062cc; /* Darker blue border on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Trending Topics</h1>
+
+        <form method="GET" action="{% url 'search_trends' %}" class="form-inline justify-content-center mb-4">
+            <input type="text" name="q" class="form-control mr-2" placeholder="Search for keywords...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <div>
+            <h3>Youtube Region</h3>
+            <form method="GET" action="{% url 'set_region' %}" class="form-inline justify-content-left mb-4">
+                <select name="region" class="form-control mr-2">
+                    <option value="US">United States</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="CA">Canada</option>
+                    <option value="AU">Australia</option>
+                    <!-- Add more regions as needed -->
+                </select>
+                <button type="submit" class="btn btn-primary">Set Region</button>
+            </form>
+        </div>
+
+        <!-- Tabs navigation -->
+        <ul class="nav nav-tabs" id="trendTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="reddit-tab" data-toggle="tab" href="#reddit" role="tab" aria-controls="reddit" aria-selected="true">Reddit Trends</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="youtube-tab" data-toggle="tab" href="#youtube" role="tab" aria-controls="youtube" aria-selected="false">YouTube Trends</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="twitter-tab" data-toggle="tab" href="#twitter" role="tab" aria-controls="twitter" aria-selected="false">Twitter Trends</a>
+            </li>
+        </ul>
+
+        <!-- Tabs content -->
+        <div class="tab-content" id="trendTabsContent">
+            <div class="tab-pane fade show active" id="reddit" role="tabpanel" aria-labelledby="reddit-tab">
+                <div class="row mt-3">
+                    {% for trend in trends %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ trend.title }}</h5>
+                                <p class="card-text"><a href="{{ trend.url }}" target="_blank">{{ trend.source }}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="youtube" role="tabpanel" aria-labelledby="youtube-tab">
+                <div class="row mt-3">
+                    {% for trend in youtube_trends %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ trend.cover_picture_url }}" class="card-img-top" alt="{{ trend.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ trend.title }}</h5>
+                                <p class="card-text">{{ trend.description|truncatewords:20 }}</p>
+                                <a href="{{ trend.video_url }}" target="_blank" class="btn btn-primary">Watch Video</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="twitter" role="tabpanel" aria-labelledby="twitter-tab">
+                <div class="row mt-3">
+                    {% for trend in twitter_trends %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{{ trend.url }}" target="_blank">{{ trend.title }}</a></h5>
+                                <p class="card-text">{{ trend.description|truncatewords:20 }}</p>
+                                <p class="card-text">{{ trend.source }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

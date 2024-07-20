@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .results-list li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Search Results for "{{ query }}"</h1>
+
+        <!-- Search Form -->
+        <form method="GET" action="{% url 'search_trends' %}" class="form-inline justify-content-center mb-4">
+            <input type="text" name="q" class="form-control mr-2" value="{{ query }}" placeholder="Search for keywords...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <!-- Search Results -->
+        <ul class="list-group results-list mb-4">
+            {% for result in results %}
+            <li class="list-group-item">
+                {{ result.title }} - <a href="{{ result.url }}" target="_blank">{{ result.source }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Back to Latest Trends</a>
+    </div>
+
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
